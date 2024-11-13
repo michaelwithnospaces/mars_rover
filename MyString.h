@@ -1,6 +1,12 @@
 # ifndef MY_STRING_H
 # define MY_STRING_H
 
+# include <iostream>
+# include <fstream>
+# include <tuple>
+# include <limits>
+# include <stdexcept>
+
 class MyString
 {
 private:
