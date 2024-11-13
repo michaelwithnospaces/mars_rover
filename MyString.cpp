@@ -31,3 +31,5 @@ MyString::MyString (const char* cstr)
         this->cstring_[0] = '\0';
     }
 }
+
+MyString::~MyString () { delete [] this->cstring_; };
