@@ -81,10 +81,12 @@ MyString& MyString::operator= (const MyString& strToAssign)
     return *this;
 }
 
-// MyString& MyString::operator+= (const MyString& str)
-// {
-    
-// }
+MyString& MyString::operator+= (const MyString& str)
+{
+    // abuses already made overloaded addition operator
+    *this = *this + str;
+    return *this;
+}
 
 // bool MyString::operator== (const MyString& rhs)
 // {

@@ -25,9 +25,9 @@ void testAssignmentOperator(MyString lhs, MyString rhs)
 
 void testAppendOperator(MyString lhs, MyString rhs)
 {
-    // std::cout << "Testing Append Operator (+=): " << std::endl;
-    // lhs += rhs;
-    // std::cout << "Expected: HowdyAggies, Got: " << lhs.data();
+    std::cout << "Testing Append Operator (+=): " << std::endl;
+    lhs += rhs;
+    std::cout << "Expected: HowdyAggies, Got: " << lhs.data() << std::endl << std::endl;
 }
 
 void testEqualityOperator(MyString lhs, MyString rhs)
