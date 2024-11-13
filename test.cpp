@@ -32,7 +32,12 @@ void testAppendOperator(MyString lhs, MyString rhs)
 
 void testEqualityOperator(MyString lhs, MyString rhs)
 {
-
+    std::cout << "Testing Equality Operator (==): " << std::endl;
+    bool result = lhs == rhs;
+    std::cout << "Expected: 0, Got: " << result << std::endl;
+    MyString str1 = MyString("Howdy");
+    result = lhs == str1;
+    std::cout << "Expected: 1, Got: " << result << std::endl << std::endl;
 }
 
 void testAdditionOperator(MyString lhs, MyString rhs)
@@ -53,7 +58,7 @@ int main ()
     // testCopyConstructorFromCStr();
     testAssignmentOperator(str1, str2);
     testAppendOperator(str1, str2);
-    // testEqualityOperator(str1, str2)
+    testEqualityOperator(str1, str2);
     testAdditionOperator(str1, str2);
 
     return 0;

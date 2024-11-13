@@ -88,10 +88,17 @@ MyString& MyString::operator+= (const MyString& str)
     return *this;
 }
 
-// bool MyString::operator== (const MyString& rhs)
-// {
+bool MyString::operator== (const MyString& rhs)
+{
+    if (this->length_ != rhs.length_) return false;
 
-// }
+    for (size_t i = 0; i < this->length_; ++i)
+    {
+        if (this->cstring_[i] != rhs.cstring_[i]) return false;
+    }
+
+    return true;
+}
 
 MyString MyString::operator+ (const MyString& rhs)
 {
