@@ -18,7 +18,7 @@ public:
     size_t capacity () const;             // Returns size of storage space currently allocated for string (bytes)
     size_t size () const;                 // Returns current number of elements in the array
     size_t length () const;               // Returns length of the string (bytes)
-    size_t find (const MyString& str,    // Searches string for first occurrence of sequence specified by arguments
+    size_t find (const MyString& str,     // Searches string for first occurrence of sequence specified by arguments
                  size_t pos = 0) const; 
 
     bool empty () const;                  // Returns whether string is empty
