@@ -91,7 +91,32 @@ MyString& MyString::operator= (const MyString& strToAssign)
 
 // }
 
-// MyString MyString::operator+ (const MyString& rhs)
-// {
+MyString MyString::operator+ (const MyString& rhs)
+{
+    MyString result = MyString();
 
-// }
+    delete [] result.cstring_; // free existing memory
+
+    result.length_ = this->length_ + rhs.length_;
+    result.cstring_ = new char[result.length_ + 1];
+
+    size_t index = 0;
+    // copy lhs to the result c-string
+    for (size_t i = 0; i < this->length_; ++i)
+    {
+        result.cstring_[index] = this->cstring_[i];
+        ++index;
+    }
+
+    // copy rhs to the result c-string
+    for (size_t i = 0; i < rhs.length_; ++i)
+    {
+        result.cstring_[index] = rhs.cstring_[i];
+        ++index;
+    }
+
+    // after loop finishes, index incremented to result.length_
+    result.cstring_[index] = '\0';
+
+    return result;
+}
