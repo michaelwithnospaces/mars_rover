@@ -1,6 +1,6 @@
 # include "MyString.h"
 
-MyString::MyString() : cstring_(new char[1]), length_(1) 
+MyString::MyString() : cstring_(new char[1]), length_(0) 
 {
     cstring_[0] = '\0';
 };
@@ -8,55 +8,39 @@ MyString::MyString() : cstring_(new char[1]), length_(1)
 MyString::MyString (const MyString& strToCopy) : cstring_(nullptr), length_(strToCopy.length_) 
 {
     // deep copy
-    // if cstr is non empty
-    if (strToCopy.cstring_ != nullptr)
-    {
-        cstring_ = new char[this->length_ + 1]; // +1 for null terminator
+    cstring_ = new char[this->length_ + 1]; // +1 for null terminator
 
-        for (size_t i = 0; i < length_; ++i)
-        {
-            this->cstring_[i] = strToCopy.cstring_[i];
-        }
-        this->cstring_[length_] = '\0'; // null terminate the string
-    }
-    else
+    for (size_t i = 0; i < length_; ++i)
     {
-        this->length_ = 0;
-        this->cstring_ = new char[1];
-        this->cstring_[0] = '\0';
+        this->cstring_[i] = strToCopy.cstring_[i];
     }
+    this->cstring_[length_] = '\0'; // null terminate the string
 };
 
 MyString::MyString (const char* cstr) : cstring_(nullptr), length_(0)
 {
     // deep copy
-    // if cstr is non empty
-    if (cstr != nullptr)
+    this->length_ = 0;
+    // find length by iterating until not null terminator
+    while (cstr[this->length_] != '\0')
     {
-        this->length_ = 0;
-        // find length by iterating until not null terminator
-        while (cstr[this->length_] != '\0')
-        {
-            ++(this->length_);
-        }
-
-        cstring_ = new char[this->length_ + 1]; // +1 for null terminator
-
-        for (size_t i = 0; i < length_; ++i)
-        {
-            this->cstring_[i] = cstr[i];
-        }
-        this->cstring_[length_] = '\0'; // null terminate the string
+        ++(this->length_);
     }
-    else
+
+    cstring_ = new char[this->length_ + 1]; // +1 for null terminator
+
+    for (size_t i = 0; i < length_; ++i)
     {
-        this->length_ = 0;
-        this->cstring_ = new char[1];
-        this->cstring_[0] = '\0';
+        this->cstring_[i] = cstr[i];
     }
+    this->cstring_[length_] = '\0'; // null terminate the string
 }
 
-MyString::~MyString () { delete [] this->cstring_; };
+MyString::~MyString () 
+{ 
+    delete [] this->cstring_; 
+    this->cstring_ = nullptr; // prevents dangling pointers
+};
 
 const char* MyString::data () const
 {
