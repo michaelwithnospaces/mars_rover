@@ -4,6 +4,8 @@
 class MyString
 {
 private:
+    char* cstring_;
+    size_t length_;
 
 public:
     MyString ();                          // Constructor
