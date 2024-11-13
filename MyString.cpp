@@ -5,10 +5,31 @@ MyString::MyString() : cstring_(new char[1]), length_(1)
     cstring_[0] = '\0';
 };
 
-MyString::MyString (const MyString& strToCopy) : cstring_(strToCopy.cstring_) {};
-
-MyString::MyString (const char* cstr)
+MyString::MyString (const MyString& strToCopy) : cstring_(nullptr), length_(strToCopy.length_) 
 {
+    // deep copy
+    // if cstr is non empty
+    if (strToCopy.cstring_ != nullptr)
+    {
+        cstring_ = new char[this->length_ + 1]; // +1 for null terminator
+
+        for (size_t i = 0; i < length_; ++i)
+        {
+            this->cstring_[i] = strToCopy.cstring_[i];
+        }
+        this->cstring_[length_] = '\0'; // null terminate the string
+    }
+    else
+    {
+        this->length_ = 0;
+        this->cstring_ = new char[1];
+        this->cstring_[0] = '\0';
+    }
+};
+
+MyString::MyString (const char* cstr) : cstring_(nullptr), length_(0)
+{
+    // deep copy
     // if cstr is non empty
     if (cstr != nullptr)
     {
@@ -60,17 +81,17 @@ MyString& MyString::operator= (const MyString& strToAssign)
     return *this;
 }
 
-MyString& MyString::operator+= (const MyString& str)
-{
+// MyString& MyString::operator+= (const MyString& str)
+// {
+    
+// }
 
-}
+// bool MyString::operator== (const MyString& rhs)
+// {
 
-bool MyString::operator== (const MyString& rhs)
-{
+// }
 
-}
+// MyString MyString::operator+ (const MyString& rhs)
+// {
 
-MyString MyString::operator+ (const MyString& rhs)
-{
-
-}
+// }
