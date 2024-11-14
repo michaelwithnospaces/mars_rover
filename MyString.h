@@ -12,6 +12,7 @@ class MyString
 private:
     char* cstring_;
     size_t length_;
+    size_t capacity_;
 
 public:
     MyString ();                          // Constructor

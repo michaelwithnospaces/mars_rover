@@ -1,11 +1,11 @@
 # include "MyString.h"
 
-MyString::MyString() : cstring_(new char[1]), length_(0) 
+MyString::MyString() : cstring_(new char[1]), length_(0), capacity_(0) 
 {
     cstring_[0] = '\0';
 };
 
-MyString::MyString (const MyString& strToCopy) : cstring_(nullptr), length_(strToCopy.length_) 
+MyString::MyString (const MyString& strToCopy) : cstring_(nullptr), length_(strToCopy.length_), capacity_(strToCopy.capacity_) 
 {
     // deep copy
     cstring_ = new char[this->length_ + 1]; // +1 for null terminator
@@ -17,7 +17,7 @@ MyString::MyString (const MyString& strToCopy) : cstring_(nullptr), length_(strT
     this->cstring_[length_] = '\0'; // null terminate the string
 };
 
-MyString::MyString (const char* cstr) : cstring_(nullptr), length_(0)
+MyString::MyString (const char* cstr) : cstring_(nullptr), length_(0), capacity_(0)
 {
     // deep copy
     this->length_ = 0;
@@ -25,6 +25,7 @@ MyString::MyString (const char* cstr) : cstring_(nullptr), length_(0)
     while (cstr[this->length_] != '\0')
     {
         ++(this->length_);
+        ++(this->capacity_);
     }
 
     cstring_ = new char[this->length_ + 1]; // +1 for null terminator
@@ -44,39 +45,43 @@ MyString::~MyString ()
 
 void MyString::resize (size_t n)
 {
-    char* resizedString = new char[n + 1];
+    if (n == this->length_) return; // if resizing to same size
 
     // resize bigger
-    if (n > this->length_)
+    if (n > this->capacity_)
     {
+        // if n is greater then 2 times current capacity, change capacity to n
+        // if n is less than 2 times current capacity, double capacity
+        size_t newCapacity = (n > 2 * this->capacity_) ? n : 2 * this->capacity_;
+
+        char* resizedString = new char[n + 1];
+
         for (size_t i = 0; i < this->length_; ++i)
         {
             resizedString[i] = this->cstring_[i];
         }
         resizedString[this->length_] = '\0';
-    }
-    else // resize smaller or same
-    {
-        for (size_t i = 0; i < n; ++i)
-        {
-            resizedString[i] = this->cstring_[i];
-        }
-        resizedString[n] = '\0';
-    }
 
-    delete [] this->cstring_;
-    this->cstring_ = resizedString;
+        delete [] this->cstring_;
+        this->cstring_ = resizedString;
+        this->capacity_ = newCapacity;
+    }
+    
+    // if the size is smaller, then you just move the null terminator;
     this->length_ = n;
+    this->cstring_[n] = '\0';
 }
 
 void MyString::clear ()
 {
-    char* emptyString = new char[1];
-    emptyString[0] = '\0';
+    // char* emptyString = new char[1];
+    // emptyString[0] = '\0';
 
-    this->length_ = 0;
-    delete [] this->cstring_;
-    this->cstring_ = emptyString;
+    // this->length_ = 0;
+    // delete [] this->cstring_;
+    // this->cstring_ = emptyString;
+
+    resize(0); // lol
 }
 
 const char* MyString::data () const
@@ -90,6 +95,7 @@ MyString& MyString::operator= (const MyString& strToAssign)
 
     delete [] this->cstring_;
     this->length_ = strToAssign.length_;
+    this->capacity_ = strToAssign.capacity_;
 
     this->cstring_ = new char[this->length_ + 1];
 
@@ -134,19 +140,17 @@ MyString MyString::operator+ (const MyString& rhs)
     // copy lhs to the result c-string
     for (size_t i = 0; i < this->length_; ++i)
     {
-        result.cstring_[index] = this->cstring_[i];
-        ++index;
+        result.cstring_[index++] = this->cstring_[i]; // index++ specifies to use, then increment
     }
 
     // copy rhs to the result c-string
     for (size_t i = 0; i < rhs.length_; ++i)
     {
-        result.cstring_[index] = rhs.cstring_[i];
-        ++index;
+        result.cstring_[index++] = rhs.cstring_[i];
     }
 
     // after loop finishes, index incremented to result.length_
-    result.cstring_[index] = '\0';
+    result.cstring_[result.length_] = '\0';
 
     return result;
 }
