@@ -34,8 +34,12 @@ void testClear(MyString lhs)
 
 void testFind(MyString lhs)
 {
-    std::cout << "Testing Find: " << std::endl;
+    std::cout << "Testing Find: [index specified]" << std::endl;
     size_t result = lhs.find("ow", 0);
+    std::cout << "Expected: 1, got " << result << std::endl << std::endl;
+
+    std::cout << "Testing Find: [index not specified]" << std::endl;
+    result = lhs.find("ow");
     std::cout << "Expected: 1, got " << result << std::endl << std::endl;
 }
 

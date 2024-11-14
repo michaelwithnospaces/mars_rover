@@ -103,12 +103,12 @@ size_t MyString::find (const MyString& str, size_t pos) const
 {
     if (pos > this->length_ || this->length_ - pos < str.length_) return -1;
 
-    for (size_t i = pos; i < this->length_ - str.length_; ++i)
+    for (size_t i = pos; i <= this->length_ - str.length_; ++i)
     {
         if (this->cstring_[i] == str.cstring_[0]) // first letter match
         {
             bool match = true;
-            for (size_t j = 0; j < str.length_; ++j)
+            for (size_t j = 1; j < str.length_; ++j)
             {
                 if (str.cstring_[j] != this->cstring_[i + j])
                 {
@@ -140,7 +140,7 @@ const char& MyString::front () const
 
 const char& MyString::at (size_t pos) const
 {
-    if (pos > this->length_ - 1) throw std::out_of_range("");
+    if (pos >= this->length_) throw std::out_of_range("index out of range");
     return this->cstring_[pos];
 }
 
