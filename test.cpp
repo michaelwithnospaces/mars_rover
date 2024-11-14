@@ -16,6 +16,22 @@ void testCopyConstructorFromCStr()
 
 }
 
+void testResize(MyString lhs)
+{
+    std::cout << "Testing Resize: " << std::endl;
+    lhs.resize(10);
+    std::cout << "Expected: Howdy, Got: " << lhs.data() << std::endl;
+    lhs.resize(3);
+    std::cout << "Expected: How, Got: " << lhs.data() << std::endl << std::endl;
+}
+
+void testClear(MyString lhs)
+{
+    std::cout << "Testing Clear: " << std::endl;
+    lhs.clear();
+    std::cout << "Expected: \"\", got " << lhs.data() << std::endl << std::endl;
+}
+
 void testAssignmentOperator(MyString lhs, MyString rhs)
 {
     std::cout << "Testing Assignment Operator (=): " << std::endl;
@@ -56,6 +72,8 @@ int main ()
     // testConstructor()
     testCopyConstructor(str1);
     // testCopyConstructorFromCStr();
+    testResize(str1);
+    testClear(str1);
     testAssignmentOperator(str1, str2);
     testAppendOperator(str1, str2);
     testEqualityOperator(str1, str2);

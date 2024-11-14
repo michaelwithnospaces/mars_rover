@@ -42,6 +42,43 @@ MyString::~MyString ()
     this->cstring_ = nullptr; // prevents dangling pointers
 };
 
+void MyString::resize (size_t n)
+{
+    char* resizedString = new char[n + 1];
+
+    // resize bigger
+    if (n > this->length_)
+    {
+        for (size_t i = 0; i < this->length_; ++i)
+        {
+            resizedString[i] = this->cstring_[i];
+        }
+        resizedString[this->length_] = '\0';
+    }
+    else // resize smaller or same
+    {
+        for (size_t i = 0; i < n; ++i)
+        {
+            resizedString[i] = this->cstring_[i];
+        }
+        resizedString[n] = '\0';
+    }
+
+    delete [] this->cstring_;
+    this->cstring_ = resizedString;
+    this->length_ = n;
+}
+
+void MyString::clear ()
+{
+    char* emptyString = new char[1];
+    emptyString[0] = '\0';
+
+    this->length_ = 0;
+    delete [] this->cstring_;
+    this->cstring_ = emptyString;
+}
+
 const char* MyString::data () const
 {
     return this->cstring_;
