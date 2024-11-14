@@ -84,9 +84,63 @@ void MyString::clear ()
     resize(0); // lol
 }
 
+size_t MyString::capacity () const
+{
+    return this->capacity_;
+}
+
+size_t MyString::size () const
+{
+    return this->length_;
+}
+
+size_t MyString::length () const
+{
+    return this->length_;
+}
+
+size_t MyString::find (const MyString& str, size_t pos) const
+{
+    if (pos > this->length_ || this->length_ - pos < str.length_) return -1;
+
+    for (size_t i = pos; i < this->length_ - str.length_; ++i)
+    {
+        if (this->cstring_[i] == str.cstring_[0]) // first letter match
+        {
+            bool match = true;
+            for (size_t j = 0; j < str.length_; ++j)
+            {
+                if (str.cstring_[j] != this->cstring_[i + j])
+                {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) return i;
+        }
+    }
+    return -1;
+}
+
+bool MyString::empty () const
+{
+    bool isEmpty = (this->length_ == 0) ? true : false;
+    return isEmpty;
+}
+
 const char* MyString::data () const
 {
     return this->cstring_;
+}
+
+const char& MyString::front () const
+{
+    return this->cstring_[0];
+}
+
+const char& MyString::at (size_t pos) const
+{
+    return this->cstring_[pos];
 }
 
 MyString& MyString::operator= (const MyString& strToAssign)
