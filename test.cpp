@@ -39,6 +39,15 @@ void testFind(MyString lhs)
     std::cout << "Expected: 1, got " << result << std::endl << std::endl;
 }
 
+void testAt(MyString lhs)
+{
+    std::cout << "Testing At: " << std::endl;
+    std::cout << "Expected: H, got " << lhs.at(0) << std::endl;
+    
+    std::cout << "Testing At: " << std::endl;
+    std::cout << "Expected: [throw std::out_of_range], got " << lhs.at(100) << std::endl << std::endl;
+}
+
 void testAssignmentOperator(MyString lhs, MyString rhs)
 {
     std::cout << "Testing Assignment Operator (=): " << std::endl;
@@ -89,6 +98,7 @@ int main ()
     testResize(str1);
     testClear(str1);
     testFind(str1);
+    testAt(str1);
     testAssignmentOperator(str1, str2);
     testAppendOperator(str1, str2);
     testEqualityOperator(str1, str2);

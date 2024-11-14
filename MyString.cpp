@@ -1,6 +1,6 @@
 # include "MyString.h"
 
-MyString::MyString() : cstring_(new char[1]), length_(0), capacity_(0) 
+MyString::MyString() : cstring_(new char[1]), length_(0), capacity_(1) 
 {
     cstring_[0] = '\0';
 };
@@ -17,7 +17,7 @@ MyString::MyString (const MyString& strToCopy) : cstring_(nullptr), length_(strT
     this->cstring_[length_] = '\0'; // null terminate the string
 };
 
-MyString::MyString (const char* cstr) : cstring_(nullptr), length_(0), capacity_(0)
+MyString::MyString (const char* cstr) : cstring_(nullptr), length_(0), capacity_(1)
 {
     // deep copy
     this->length_ = 0;
@@ -140,6 +140,7 @@ const char& MyString::front () const
 
 const char& MyString::at (size_t pos) const
 {
+    if (pos > this->length_ - 1) throw std::out_of_range("");
     return this->cstring_[pos];
 }
 
@@ -188,6 +189,7 @@ MyString MyString::operator+ (const MyString& rhs)
     delete [] result.cstring_; // free existing memory
 
     result.length_ = this->length_ + rhs.length_;
+    result.capacity_ = result.length_ + 1;
     result.cstring_ = new char[result.length_ + 1];
 
     size_t index = 0;
