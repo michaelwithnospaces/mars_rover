@@ -70,6 +70,13 @@ void testAdditionOperator(MyString lhs, MyString rhs)
     std::cout << "Expected: HowdyAggies, Got: " << result.data() << std::endl << std::endl;
 }
 
+void testingOSStream(MyString lhs, MyString rhs)
+{
+    std::cout << "Testing Insertion Operator (<<): " << std::endl;
+    std::cout << "Expected: Howdy Aggies, Got: ";
+    std::cout << lhs << " " << rhs << std::endl;
+}
+
 int main ()
 {
     MyString str1 = MyString("Howdy");
@@ -86,6 +93,7 @@ int main ()
     testAppendOperator(str1, str2);
     testEqualityOperator(str1, str2);
     testAdditionOperator(str1, str2);
+    testingOSStream(str1, str2);
 
     return 0;
 }

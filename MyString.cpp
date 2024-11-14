@@ -208,3 +208,9 @@ MyString MyString::operator+ (const MyString& rhs)
 
     return result;
 }
+
+std::ostream& operator<<(std::ostream& os, const MyString& str)
+{
+    os << str.data();
+    return os;
+}
